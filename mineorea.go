@@ -21,7 +21,7 @@ type mineorea struct {
 }
 
 
-func SetUp() *mineorea {
+func Server() *mineorea {
 	return &mineorea{}
 }
 
@@ -33,8 +33,6 @@ func newFaker() *faker.Faker {
 
 func (m mineorea) Run() {
 
-	faker := newFaker()
-
 	nm := rand.Intn(5)
 
 	fmt.Println("Resource Sim 0.0.1\n")
@@ -42,7 +40,7 @@ func (m mineorea) Run() {
 	miners := make([]*miner, nm)
 	
 	for i := range miners {
-		miners[i] = &miner{name: faker.Name(), storageCapacity: rand.Float32() * 10}
+		miners[i] = Miner() 
 		wg.Add(1)
 		fmt.Printf("Miner %v away! Miner has %v kg Capacity.\n", miners[i].name, miners[i].currentStorageCapacity())
 		// @TODO: Pass a grid and a market into the miners so they can mine the grid clean

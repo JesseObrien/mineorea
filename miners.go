@@ -3,6 +3,7 @@ package mineorea
 import (
 	"fmt"
 	"time"
+	"math/rand"
 )
 
 type modifier struct {
@@ -16,6 +17,12 @@ type miner struct {
 	// Capacity is defined in meters cubed (m^3) 
 	storageCapacity float32
 	inventory []resource
+}
+
+func Miner() *miner {
+	faker := newFaker()
+
+	return &miner{name: faker.Name(), storageCapacity: rand.Float32() * 10}
 }
 
 func (m *miner) mineUntilFull(r resource) {
