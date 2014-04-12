@@ -12,27 +12,37 @@ var wg sync.WaitGroup
 var gridX int = 10
 var gridY int = 10
 
+func init() {
+	rand.Seed(time.Now().UTC().UnixNano())
+}
+
 type mineorea struct {
 	miners int
 }
 
 
-func SetUp(m int) *mineorea {
-	return &mineorea{miners: m}
+func SetUp() *mineorea {
+	return &mineorea{}
 }
 
-
-func (m mineorea) Run() {
-	rand.Seed(time.Now().UTC().UnixNano())
+func newFaker() *faker.Faker {
 	fake, _ := faker.New("en")
 	fake.Rand = rand.New(rand.NewSource(time.Now().UTC().UnixNano()))
+	return fake
+}
+
+func (m mineorea) Run() {
+
+	faker := newFaker()
+
+	nm := rand.Intn(5)
 
 	fmt.Println("Resource Sim 0.0.1\n")
 	
-	miners := make([]*miner, m.miners)
+	miners := make([]*miner, nm)
 	
 	for i := range miners {
-		miners[i] = &miner{name: fake.Name(), storageCapacity: rand.Float32() * 10}
+		miners[i] = &miner{name: faker.Name(), storageCapacity: rand.Float32() * 10}
 		wg.Add(1)
 		fmt.Printf("Miner %v away! Miner has %v kg Capacity.\n", miners[i].name, miners[i].currentStorageCapacity())
 		// @TODO: Pass a grid and a market into the miners so they can mine the grid clean
