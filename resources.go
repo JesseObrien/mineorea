@@ -18,7 +18,7 @@ type coal struct {
 }
 
 func (c coal) extract() resource {
-	return &coal{name: "Coal", mass: rand.Float32()}	
+	return &coal{mass: rand.Float32()}	
 }
 
 func (c coal) unitMass() float32 {
@@ -30,7 +30,7 @@ func (c coal) density() float32 {
 }
 
 func (c coal) getName() string {
-	return c.name
+	return "coal" 
 }
 
 type copper struct {}
